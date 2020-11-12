@@ -22,4 +22,3 @@ class ProductBaseCore(models.Model):
 
     class Meta:
         abstract = True
-
