@@ -48,6 +48,8 @@ class ProductBaseCore(ProductCommon):
 
     name = models.CharField(max_length=100, unique=True)
 
+    class Meta:
+        abstract = True
 
 """
     OLD STYLE TUPLE
