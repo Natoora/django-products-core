@@ -2,12 +2,18 @@ import uuid
 from django.db import models
 
 
+class ProductManager(models.Manager):
+    def get_active_products(self):
+        return super().filter(status=ProductCommon.ProductStatusChoice.ACTIVE)
+
+
 class ProductCommon(models.Model):
     class ProductStatusChoice(models.TextChoices):
         ACTIVE = 'ACTIVE', 'Active'
         DISABLED = 'DISABLED', 'Disabled'
         DISCONTINUED = 'DISCONTINUED', 'Discontinued'
 
+    objects = ProductManager()
     status = models.CharField(max_length=20, choices=ProductStatusChoice.choices,
                               default=ProductStatusChoice.ACTIVE, db_index=True)
     uuid_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -25,6 +31,9 @@ class ProductCore(ProductCommon):
     # This function is here for testing
     def __str__(self):
         return self.name
+
+    class Meta:
+        abstract = True
 
 
 class ProductBaseCore(ProductCommon):
