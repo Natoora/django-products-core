@@ -3,4 +3,4 @@ from products_core.models import ProductCore
 
 
 class Product(ProductCore):
-    custom_att = models.CharField(max_length=200)
+    custom_att = models.CharField(max_length=200, default="123")
