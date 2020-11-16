@@ -20,6 +20,7 @@ class ProductCore(ProductCommon):
     """
     ProductCore Abstract Model
     """
+
     name = models.CharField(max_length=100)
 
     # This function is here for testing
