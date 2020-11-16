@@ -43,8 +43,13 @@ class ProductCoreModelTests(TestCase):
         product = ProductCoreFactory(status="DISCONTINUED")
         self.assertEqual(product.status, "DISCONTINUED")
 
+    # def test_return_active(self):
+    #    product = ProductCoreFactory(name='MyTestName')
+    #    print(ProductCore.objects.filter(status=ProductCore.ProductStatusChoice.ACTIVE).values())
+    #    self.assertIs(ProductCore.objects.filter(name=self.product).exists(), True)
+
     # This is not working for now
-    #def test_unknown_status(self):
+    # def test_unknown_status(self):
     #    try:
     #        product = ProductFactory(status="erasdfjiAAA")
     #        product.name = ""
