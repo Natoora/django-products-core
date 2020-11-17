@@ -1,10 +1,12 @@
+from factory.django import DjangoModelFactory
 from faker import Factory
 from tests.models import ProductCore, ProductBaseCore
-from products_core.factories import ProductCoreFactory
 
 faker = Factory.create()
 
 
-class ProductFactory(ProductCoreFactory):
+class ProductCoreFactory(DjangoModelFactory):
     class Meta:
         model = ProductCore
+
+    name = faker.name()
