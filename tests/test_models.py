@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from tests.factory import ProductCoreFactory
 from .models import ProductCore, ProductBaseCore
-from products_core.models import ProductCore, ProductBaseCore
+#from products_core.models import ProductCore, ProductBaseCore
 
 
 class ProductCoreModelTests(TestCase):
