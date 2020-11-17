@@ -1,17 +1,17 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from tests.factory import ProductCoreFactory
+from tests.factory import ProductFactory
 from .models import ProductCore, ProductBaseCore
 #from products_core.models import ProductCore, ProductBaseCore
 
 
 class ProductCoreModelTests(TestCase):
     def setUp(self):
-        self.product = ProductCoreFactory()
+        self.product = ProductFactory()
 
     def test_name_is_empty(self):
         try:
-            product = ProductCoreFactory()
+            product = ProductFactory()
             product.name = ""
             product.full_clean()
             product.save()
@@ -20,7 +20,7 @@ class ProductCoreModelTests(TestCase):
 
     def test_for_max_length(self):
         try:
-            product = ProductCoreFactory()
+            product = ProductFactory()
             product.name = ""
             for i in range(0, 500):
                 product.name += "a"
@@ -36,11 +36,11 @@ class ProductCoreModelTests(TestCase):
         self.assertEqual(self.product.status, "ACTIVE")
 
     def test_disabled_status(self):
-        product = ProductCoreFactory(status="DISABLED")
+        product = ProductFactory(status="DISABLED")
         self.assertEqual(product.status, "DISABLED")
 
     def test_discontinued_status(self):
-        product = ProductCoreFactory(status="DISCONTINUED")
+        product = ProductFactory(status="DISCONTINUED")
         self.assertEqual(product.status, "DISCONTINUED")
 
     # def test_return_active(self):
