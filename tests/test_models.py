@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+
 from tests.factory import ProductCoreFactory
 import random
 import string
