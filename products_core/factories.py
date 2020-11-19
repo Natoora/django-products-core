@@ -3,9 +3,10 @@ from factory.fuzzy import FuzzyChoice
 from tests.models import ProductCore, ProductBaseCore
 import factory
 
+
 class ProductCoreFactory(DjangoModelFactory):
     class Meta:
         model = ProductCore
 
-    status = FuzzyChoice(CustomerCore.StatusChoices)
+    status = FuzzyChoice(ProductCore.ProductStatusChoice)
     name = factory.Faker("name")
