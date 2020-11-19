@@ -1,10 +1,9 @@
-from faker import Factory
 from tests.models import ProductCore, ProductBaseCore
 from products_core.factories import ProductCoreFactory
-
-faker = Factory.create()
-
+from factory.fuzzy import FuzzyInteger
 
 class ProductFactory(ProductCoreFactory):
     class Meta:
         model = ProductCore
+    
+    custom_att = FuzzyInteger(0, 100)

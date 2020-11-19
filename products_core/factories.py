@@ -1,12 +1,11 @@
 from factory.django import DjangoModelFactory
-from faker import Factory
+from factory.fuzzy import FuzzyChoice
 from tests.models import ProductCore, ProductBaseCore
-
-faker = Factory.create()
-
+import factory
 
 class ProductCoreFactory(DjangoModelFactory):
     class Meta:
         model = ProductCore
 
-    name = faker.name()
+    status = FuzzyChoice(CustomerCore.StatusChoices)
+    name = factory.Faker("name")
