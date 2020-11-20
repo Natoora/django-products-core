@@ -20,7 +20,7 @@ class ProductCommon(models.Model):
         default=ProductStatusChoice.ACTIVE,
         db_index=True,
     )
-    uuid_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    #uuid_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     class Meta:
         abstract = True
