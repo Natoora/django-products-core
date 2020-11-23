@@ -2,6 +2,12 @@ import uuid
 from django.db import models
 
 
+def get_next_product_code():
+    """
+    Overriding this in the file that imports
+    """
+    pass
+
 class ProductManager(models.Manager):
     def get_active_products(self):
         return super().filter(status=ProductCommon.ProductStatusChoice.ACTIVE)
@@ -14,6 +20,7 @@ class ProductCommon(models.Model):
         DISCONTINUED = "DISCONTINUED", "Discontinued"
 
     objects = ProductManager()
+    code = models.IntegerField(default=get_next_product_code, editable=False, unique=True)
     status = models.CharField(
         max_length=20,
         choices=ProductStatusChoice.choices,
