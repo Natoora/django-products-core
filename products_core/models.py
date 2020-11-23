@@ -1,12 +1,24 @@
 import uuid
 from django.db import models
+from django.db.models import Max
+
+
+def get_next_productbase_code():
+    try:
+        next_productbase_code = ProductBaseCore.objects.all().aggregate(Max('code'))
+        pb_code = next_productbase_code['code__max'] + 1
+    except:
+        pb_code = 66
+    return pb_code
 
 
 def get_next_product_code():
-    """
-    Overriding this in the file that imports
-    """
-    pass
+    try:
+        next_product_code = ProductCore.objects.all().aggregate(Max('code'))
+        p_code = next_product_code['code__max'] + 1
+    except:
+        p_code = 66
+    return p_code
 
 class ProductManager(models.Manager):
     def get_active_products(self):
@@ -18,16 +30,16 @@ class ProductCommon(models.Model):
         ACTIVE = "ACTIVE", "Active"
         DISABLED = "DISABLED", "Disabled"
         DISCONTINUED = "DISCONTINUED", "Discontinued"
+        FROM_WS_CORE = "FROMWSCORE", "FROMWSCORE"
 
     objects = ProductManager()
-    code = models.IntegerField(default=get_next_product_code, editable=False, unique=True)
     status = models.CharField(
         max_length=20,
         choices=ProductStatusChoice.choices,
         default=ProductStatusChoice.ACTIVE,
         db_index=True,
     )
-    #uuid_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    # uuid_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     class Meta:
         abstract = True
@@ -39,6 +51,7 @@ class ProductCore(ProductCommon):
     """
 
     name = models.CharField(max_length=100)
+    code = models.IntegerField(default=get_next_product_code, editable=False, unique=True)
 
     # This function is here for testing
     def __str__(self):
@@ -54,9 +67,11 @@ class ProductBaseCore(ProductCommon):
     """
 
     name = models.CharField(max_length=100, unique=True)
+    code = models.IntegerField(default=get_next_productbase_code(), editable=False, unique=True)
 
     class Meta:
         abstract = True
+
 
 """
     OLD STYLE TUPLE
