@@ -2,24 +2,17 @@ import uuid
 from django.db import models
 from django.db.models import Max
 
-"""
+
 def get_next_productbase_code():
-    try:
-        next_productbase_code = ProductBaseCore.objects.all().aggregate(Max('code'))
-        pb_code = next_productbase_code['code__max'] + 1
-    except:
-        pb_code = 66
-    return pb_code
+    # Override this in the models file
+    pass
 
 
 def get_next_product_code():
-    try:
-        next_product_code = ProductCore.objects.all().aggregate(Max('code'))
-        p_code = next_product_code['code__max'] + 1
-    except:
-        p_code = 66
-    return p_code
-"""
+    # Override this in the models file
+    pass
+
+
 class ProductManager(models.Manager):
     def get_active_products(self):
         return super().filter(status=ProductCommon.ProductStatusChoice.ACTIVE)
@@ -67,7 +60,7 @@ class ProductBaseCore(ProductCommon):
     """
 
     name = models.CharField(max_length=100, unique=True)
-    code = models.IntegerField(default=get_next_productbase_code(), editable=False, unique=True)
+    code = models.IntegerField(default=get_next_productbase_code, editable=False, unique=True)
 
     class Meta:
         abstract = True
