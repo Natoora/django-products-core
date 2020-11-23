@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.db.models import Max
 
-
+"""
 def get_next_productbase_code():
     try:
         next_productbase_code = ProductBaseCore.objects.all().aggregate(Max('code'))
@@ -19,7 +19,7 @@ def get_next_product_code():
     except:
         p_code = 66
     return p_code
-
+"""
 class ProductManager(models.Manager):
     def get_active_products(self):
         return super().filter(status=ProductCommon.ProductStatusChoice.ACTIVE)
