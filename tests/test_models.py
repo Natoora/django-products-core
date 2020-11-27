@@ -12,13 +12,12 @@ class ProductCoreModelTests(TestCase):
     """ Product Core TestCases """
 
     def setUp(self):
-        # TODO create a product_base and link with product
-        # self.product_base = TODO
         self.product = ProductCoreFactory.create(
             status=Product.ACTIVE,
             name="foobar",
             custom_attrib=10,
         )
+        self.product_base = ProductBaseCoreFactory(product=self.product)
 
     #
     # Attributes from Abstract Model
