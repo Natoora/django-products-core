@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.test import TestCase
 
 from tests.factories import ProductCoreFactory, ProductBaseCoreFactory
-from tests.models import Product, ProductBase
+from tests.models import Product
 import random
 import string
 
