@@ -1,8 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
-from tests.factories import ProductCoreFactory
-from tests.models import ProductCore
+
+from tests.factories import ProductCoreFactory, ProductBaseCoreFactory
+from tests.models import Product, ProductBase
 import random
 import string
 
@@ -14,7 +15,7 @@ class ProductCoreModelTests(TestCase):
         # TODO create a product_base and link with product
         # self.product_base = TODO
         self.product = ProductCoreFactory.create(
-            status=ProductCore.ACTIVE,
+            status=Product.ACTIVE,
             name="foobar",
             custom_attrib=10,
         )
@@ -22,27 +23,6 @@ class ProductCoreModelTests(TestCase):
     #
     # Attributes from Abstract Model
     #
-
-    # TODO remove it
-    # uuid_code
-    #def test_uuid_code(self):
-    #    self.assertEqual(
-    #        self.product.uuid_code, "c532c472-cb23-4c91-994e-36ca1da8b71e"
-    #    )
-
-    #def test_uuid_code_is_not_editable(self):
-    #    # Not possible to test as editable=False only applies to Django Admin
-    #    pass
-
-    #def test_uuid_code_unique(self):
-    #    with self.assertRaises(IntegrityError):
-    #        ProductCoreFactory.create(
-    #            uuid_code="c532c472-cb23-4c91-994e-36ca1da8b71e"
-    #        )
-
-    #def test_uuid_code_not_null(self):
-    #    with self.assertRaises(IntegrityError):
-    #        ProductCoreFactory.create(uuid_code=None)
 
     # status
     def test_status(self):
@@ -60,7 +40,7 @@ class ProductCoreModelTests(TestCase):
         pass
 
     def test_status_default(self):
-        product = ProductCore()
+        product = Product()
         product.name = "foo"
         product.save()
         self.assertEquals(product.status, product.ACTIVE)
@@ -104,4 +84,4 @@ class ProductCoreModelTests(TestCase):
     #
     def test_create_batch(self):
         ProductCoreFactory.create_batch(499)
-        self.assertEquals(ProductCore.objects.count(), 500)  # 499 + setUp one
+        self.assertEquals(Product.objects.count(), 500)  # 499 + setUp one

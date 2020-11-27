@@ -1,10 +1,17 @@
-from tests.models import ProductCore
-from products_core.factories import ProductCoreFactory
+from tests.models import Product, ProductBase
+from products_core.factories import ProductCoreFactory, ProductBaseCoreFactory
 from factory.fuzzy import FuzzyInteger
 
 
-class ProductFactory(ProductCoreFactory):
+class ProductCoreFactory(ProductCoreFactory):
     class Meta:
-        model = ProductCore
+        model = Product
+
+    custom_attrib = FuzzyInteger(0, 100)
+
+
+class ProductBaseCoreFactory(ProductBaseCoreFactory):
+    class Meta:
+        model = ProductBase
 
     custom_attrib = FuzzyInteger(0, 100)
