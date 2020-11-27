@@ -5,62 +5,49 @@ from tests.factories import ProductCoreFactory
 from tests.models import ProductCore
 import random
 import string
-import logging
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
-
-file_handler = logging.FileHandler("products.log")
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
 
 
 class ProductCoreModelTests(TestCase):
     """ Product Core TestCases """
 
     def setUp(self):
+        # TODO create a product_base and link with product
+        # self.product_base = TODO
         self.product = ProductCoreFactory.create(
-            uuid_code="c532c472-cb23-4c91-994e-36ca1da8b71e",
-            status=ProductCore.ProductStatusChoice.ACTIVE,
+            status=ProductCore.ACTIVE,
             name="foobar",
-            custom_att=10,
-        )
-        logger.info(
-            "Finished setUp: Created ProductCore object: {} - {}".format(
-                self.product.name, self.product.status
-            )
+            custom_attrib=10,
         )
 
     #
     # Attributes from Abstract Model
     #
 
+    # TODO remove it
     # uuid_code
-    def test_uuid_code(self):
-        self.assertEqual(
-            self.product.uuid_code, "c532c472-cb23-4c91-994e-36ca1da8b71e"
-        )
+    #def test_uuid_code(self):
+    #    self.assertEqual(
+    #        self.product.uuid_code, "c532c472-cb23-4c91-994e-36ca1da8b71e"
+    #    )
 
-    def test_uuid_code_is_not_editable(self):
-        # Not possible to test as editable=False only applies to Django Admin
-        pass
+    #def test_uuid_code_is_not_editable(self):
+    #    # Not possible to test as editable=False only applies to Django Admin
+    #    pass
 
-    def test_uuid_code_unique(self):
-        with self.assertRaises(IntegrityError):
-            ProductCoreFactory.create(
-                uuid_code="c532c472-cb23-4c91-994e-36ca1da8b71e"
-            )
+    #def test_uuid_code_unique(self):
+    #    with self.assertRaises(IntegrityError):
+    #        ProductCoreFactory.create(
+    #            uuid_code="c532c472-cb23-4c91-994e-36ca1da8b71e"
+    #        )
 
-    def test_uuid_code_not_null(self):
-        with self.assertRaises(IntegrityError):
-            ProductCoreFactory.create(uuid_code=None)
+    #def test_uuid_code_not_null(self):
+    #    with self.assertRaises(IntegrityError):
+    #        ProductCoreFactory.create(uuid_code=None)
 
     # status
     def test_status(self):
         self.assertEqual(
-            self.product.status, self.product.ProductStatusChoice.ACTIVE
+            self.product.status, self.product.ACTIVE
         )
 
     def test_unknown_status(self):
@@ -76,7 +63,7 @@ class ProductCoreModelTests(TestCase):
         product = ProductCore()
         product.name = "foo"
         product.save()
-        self.assertEquals(product.status, product.ProductStatusChoice.ACTIVE)
+        self.assertEquals(product.status, product.ACTIVE)
 
     def test_status_not_null(self):
         with self.assertRaises(IntegrityError):
@@ -84,11 +71,9 @@ class ProductCoreModelTests(TestCase):
 
     # name
     def test_name(self):
-        logger.info("Doing the test_name test")
         self.assertEqual(self.product.name, "foobar")
 
     def test_name_max_length(self):
-        logger.info("Doing the test_name_max_length test")
         exceed_limits = "".join(
             random.choices(string.ascii_letters + string.digits, k=201)
         )
@@ -97,7 +82,6 @@ class ProductCoreModelTests(TestCase):
             self.product.full_clean()  # calls save()
 
     def test_name_not_null(self):
-        logger.info("Doing the test_name_not_null test")
         with self.assertRaises(ValidationError):
             self.product.name = None
             self.product.full_clean()  # calls save()
@@ -107,12 +91,12 @@ class ProductCoreModelTests(TestCase):
     #
 
     # custom_att
-    def test_custom_att(self):
-        self.assertEqual(self.product.custom_att, 10)
+    def test_custom_attrib(self):
+        self.assertEqual(self.product.custom_attrib, 10)
 
-    def test_custom_att_null(self):
+    def test_custom_attrib_null(self):
         with self.assertRaises(ValidationError):
-            self.product.custom_att = None
+            self.product.custom_attrib = None
             self.product.full_clean()  # calls save()
 
     #
